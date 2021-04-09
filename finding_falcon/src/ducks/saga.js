@@ -42,11 +42,7 @@ function* findFalcon(action) {
       method: "POST",
     });
     const token = yield tokenResponse.json();
-    const planets = yield select(getSelectedPlanet);
-    const planet_names = [];
-    planets.forEach((planet) => {
-      planet_names.push(planet.name);
-    });
+    const planet_names = yield select(getSelectedPlanet);
     const vehicle_names = yield select(getSelectedVehicle);
     const response = yield call(invoke, "/find", {
       method: "POST",

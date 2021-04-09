@@ -26,7 +26,7 @@ const initialState = {
   selectedPlanets: [],
   vehicles: [],
   selectedVehicles: [],
-  score: 0,
+  result: {},
   error: "",
 };
 
@@ -66,23 +66,14 @@ const reducer = (state = initialState, action) => {
         vehicles: updatedVehicles,
       };
     case SELECT_PLANETS:
-      const newPlanet = {
-        id: action.payload.slNo,
-        name: action.payload.pname,
-      };
       let selectedPlanets = state.selectedPlanets;
-      const ids = state.selectedPlanets.map((planet)=>{
-        return planet.id
-      });
-      if (state.selectedPlanets.length === 0 || !ids.includes(newPlanet.id)) {
-        selectedPlanets.push(newPlanet);
+      const id = parseInt(action.payload.slNo);
+      const pname = action.payload.pname;
+
+      if (selectedPlanets.length < id) {
+        selectedPlanets.push(pname);
       } else {
-        selectedPlanets = state.selectedPlanets.map((planet) => {
-          if (planet.id === newPlanet.id) {
-            planet.name = newPlanet.name;
-          }
-          return planet;
-        });
+        selectedPlanets[id - 1] = pname;
       }
       return {
         ...state,
