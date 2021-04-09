@@ -1,13 +1,16 @@
-import { all, put, takeEvery, call } from "redux-saga/effects";
+import { all, put, takeEvery, call, select } from "redux-saga/effects";
 
 import { invoke } from "../apiConfig";
-import { FETCH_PLANETS, FETCH_VEHICLES } from "./constants";
+import { FETCH_PLANETS, FETCH_VEHICLES, FIND_FALCON } from "./constants";
 import {
   fetchPlanetsSuccess,
   fetchPlanetsFailure,
   fetchVehiclesSuccess,
   fetchVehiclesFailure,
 } from "./actions";
+
+const getSelectedPlanet = (state) => state.selectedPlanets;
+const getSelectedVehicle = (state) => state.selectedVehicles;
 
 function* getPlanets(action) {
   try {
@@ -33,9 +36,36 @@ function* getVehicles(action) {
   }
 }
 
+function* findFalcon(action) {
+  try {
+    const tokenResponse = yield call(invoke, "/token", {
+      method: "POST",
+    });
+    const token = yield tokenResponse.json();
+    const planets = yield select(getSelectedPlanet);
+    const planet_names = [];
+    planets.forEach((planet) => {
+      planet_names.push(planet.name);
+    });
+    const vehicle_names = yield select(getSelectedVehicle);
+    const response = yield call(invoke, "/find", {
+      method: "POST",
+      body: {
+        token: token.token,
+        planet_names,
+        vehicle_names,
+      },
+    });
+    console.log(response.json().status);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(FETCH_PLANETS, getPlanets),
     takeEvery(FETCH_VEHICLES, getVehicles),
+    takeEvery(FIND_FALCON, findFalcon),
   ]);
 }

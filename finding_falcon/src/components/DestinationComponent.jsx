@@ -12,7 +12,6 @@ const DestinationComponent = (props) => {
   const destinations = useSelector((state) => state.planets);
   const vehicles = useSelector((state) => state.vehicles);
   const selectedPlanets = useSelector((state) => state.selectedPlanets);
-  // const selectedVehicles = useSelector((state) => state.selectedVehicles);
 
   const [isVehicle, setIsVehicle] = useState(false);
   const [isVehicleDisable, setIsVehicleDisable] = useState(false);

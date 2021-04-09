@@ -7,7 +7,7 @@ import {
   FETCH_VEHICLES_SUCCESS,
   SET_VEHICLE_NUM,
   SELECT_PLANETS,
-
+  FIND_FALCON,
 } from "./constants";
 
 export const fetchPlanets = () => ({
@@ -45,5 +45,9 @@ export const setVehicleNum = (name) => ({
 
 export const selectPlanets = (pname, slNo) => ({
   type: SELECT_PLANETS,
-  payload: {pname,slNo}
+  payload: { pname, slNo },
+});
+
+export const findFalcon = () => ({
+  type: FIND_FALCON,
 });
