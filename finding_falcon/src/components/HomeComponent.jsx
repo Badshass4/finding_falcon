@@ -2,7 +2,7 @@ import React from "react";
 
 const HomeComponent = () => {
   return (
-    <div className="container">
+    <div className="container vh-100">
       <div className="d-flex justify-content mt-3">
         <h1 className="text-danger pr-2">Hello, </h1>
         <h1>Adventurer!</h1>
@@ -14,6 +14,6 @@ const HomeComponent = () => {
       </div>
     </div>
   );
-}
+};
 
 export default HomeComponent;
